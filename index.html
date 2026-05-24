@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JejakDaya - Agri-ERP & B2B Managed Marketplace</title>
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ChartJS for Market Sizing Visuals -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- MAIN HEADER -->
+        <header class="main-header">
+            <div class="brand">
+                <i class="fa-solid fa-seedling"></i>
+                <span>JejakDaya</span>
+            </div>
+            
+            <nav class="nav-links">
+                <button class="nav-item active" onclick="switchView('pitch')">
+                    <i class="fa-solid fa-presentation-screen"></i> Pitch Deck & Market
+                </button>
+                <button class="nav-item" onclick="switchView('portal')">
+                    <i class="fa-solid fa-network-wired"></i> Live Simulator Portal
+                </button>
+                
+                <!-- SIMULATOR ROLE CONTROLLER -->
+                <div class="sim-selector-container">
+                    <span class="sim-label">Role Aktif:</span>
+                    <select id="globalRoleSelect" class="role-selector" onchange="changeGlobalRole(this.value)">
+                        <option value="user_biasa">1. User Biasa (Academy)</option>
+                        <option value="petani">2. Agri-Preneur (Petani)</option>
+                        <option value="investor">3. Investor Komunitas</option>
+                        <option value="b2b">4. Pembeli B2B (Enterprise)</option>
+                        <option value="driver">5. Mitra Logistik (Driver)</option>
+                        <option value="admin">6. Admin (Pengelola)</option>
+                    </select>
+                </div>
+            </nav>
+        </header>
+
+        <!-- VIEW 1: LANDING & PITCH DECK -->
+        <main id="pitchView" class="landing-view">
+            
+            <!-- HERO BLOCK -->
+            <section class="hero">
+                <div class="hero-left">
+                    <div class="hero-tag">
+                        <i class="fa-solid fa-shield-halved"></i> Ketahanan Pangan Nasional
+                    </div>
+                    <h1 class="hero-title">Mendigitalisasi Hulu Ke Hilir, Menyejahterakan Petani</h1>
+                    <p class="hero-desc">
+                        Ekosistem digital <strong>Agri-ERP & B2B Managed Marketplace</strong> terintegrasi yang mendisrupsi rantai pasok tradisional di Jawa Tengah. Mendanai lahan secara closed-loop, mempermudah operasional lewat AI, dan menjamin penyerapan hasil panen hingga 100%.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="switchView('portal')">
+                            Mulai Demo Simulator <i class="fa-solid fa-circle-play"></i>
+                        </button>
+                        <a href="#marketSizing" class="btn btn-secondary">
+                            Analisis Pasar <i class="fa-solid fa-chart-line"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-graphic">
+                    <div class="circle-glow"></div>
+                    <div class="hero-image-card glass-panel">
+                        <h3 class="mb-4" style="color: var(--primary);"><i class="fa-solid fa-chart-pie"></i> JejakDaya Impact</h3>
+                        <div class="metric-grid">
+                            <div class="metric-item">
+                                <div class="metric-val" id="farmCount">24</div>
+                                <div class="metric-lbl">Petani Binaan</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-val" id="totalHa">12.5</div>
+                                <div class="metric-lbl">Luas Lahan (Ha)</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-val" id="tonnages">87.5</div>
+                                <div class="metric-lbl">Tonase Tersalurkan</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-val">100%</div>
+                                <div class="metric-lbl">Target Zero Food Loss</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 2: CORE PROBLEM STATEMENTS -->
+            <section id="problems">
+                <div class="section-header">
+                    <span class="section-tag">Analisis Masalah</span>
+                    <h2 class="section-title">Mengapa Sektor Pertanian Terancam Krisis?</h2>
+                    <p class="section-desc">Dua akar masalah struktural dalam ekosistem agraria Indonesia yang saling mengunci dan memiliki hubungan sebab-akibat.</p>
+                </div>
+                
+                <div class="problems-grid">
+                    <!-- Problem 1 -->
+                    <div class="problem-card glass-panel">
+                        <div class="problem-icon"><i class="fa-solid fa-people-arrows"></i></div>
+                        <h3 class="problem-title">2.1 Krisis Regenerasi Petani Muda</h3>
+                        <p class="problem-text">
+                            Sektor pertanian Indonesia didominasi petani tua. Menurut data Sensus Pertanian BPS (2023), partisipasi petani milenial (19–39 tahun) <strong>hanya tersisa di angka 21,93%</strong>. Pemuda pedesaan rasional meninggalkan sawah karena menyaksikan kemiskinan struktural akibat rantai pasok tidak memihak, beralih ke industri perkotaan demi kepastian upah.
+                        </p>
+                        <div class="problem-stat">
+                            <i class="fa-solid fa-triangle-exclamation"></i> BPS Sensus: Milenial Tani Tersisa 21.93%
+                        </div>
+                    </div>
+                    
+                    <!-- Problem 2 -->
+                    <div class="problem-card glass-panel warning">
+                        <div class="problem-icon"><i class="fa-solid fa-route"></i></div>
+                        <h3 class="problem-title">2.2 Rantai Distribusi Panjang & Tengkulak</h3>
+                        <p class="problem-text">
+                            Sektor pertanian menyumbang PDB besar, namun kesejahteraan petani minim. Distribusi komoditas segar sangat panjang (mencapai 7 - 8 tahap) dan didominasi perantara. Tengkulak sering memonopoli harga hulu, namun paradoxnya tengkulaklah yang membiayai modal tanam dan logistik karena ketiadaan opsi perbankan.
+                        </p>
+                        <div class="problem-stat">
+                            <i class="fa-solid fa-arrows-split-up-and-left"></i> Rantai Pasok Panjang: 7-8 Tingkatan
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROBLEM VALIDATION SURVEY -->
+            <section id="validation">
+                <div class="section-header">
+                    <span class="section-tag">Validasi Masalah</span>
+                    <h2 class="section-title">Data Primer Survei Lapangan</h2>
+                    <p class="section-desc">Hasil rapid-survey riil terhadap 150 Petani Hortikultura di Kabupaten Semarang (Bandungan, Getasan, Sumowono) dan 80 Pelaku Kuliner (Horeka).</p>
+                </div>
+
+                <div class="problems-grid">
+                    <div class="glass-panel p-6" style="padding: 2rem;">
+                        <h3 class="mb-4 text-primary"><i class="fa-solid fa-users-viewfinder"></i> Sisi Hulu (Petani Responden)</h3>
+                        <div class="mt-4">
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-2" style="display:flex; justify-content:space-between;">
+                                    <span>Ketergantungan modal / logistik tengkulak</span>
+                                    <strong>84%</strong>
+                                </div>
+                                <div class="project-progress"><div class="project-progress-bar" style="width: 84%; background: var(--accent);"></div></div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-2" style="display:flex; justify-content:space-between;">
+                                    <span>Buta informasi harga harian perkotaan</span>
+                                    <strong>76%</strong>
+                                </div>
+                                <div class="project-progress"><div class="project-progress-bar" style="width: 76%; background: var(--accent);"></div></div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between mb-2" style="display:flex; justify-content:space-between;">
+                                    <span>Bersedia adopsi AI Pencatatan Suara</span>
+                                    <strong>92%</strong>
+                                </div>
+                                <div class="project-progress"><div class="project-progress-bar" style="width: 92%; background: var(--primary);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6" style="padding: 2rem;">
+                        <h3 class="mb-4 text-secondary"><i class="fa-solid fa-store"></i> Sisi Hilir (Pembeli B2B/Horeka)</h3>
+                        <div class="mt-4">
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-2" style="display:flex; justify-content:space-between;">
+                                    <span>Fluktuasi harga pasar mengacaukan COGS</span>
+                                    <strong>72%</strong>
+                                </div>
+                                <div class="project-progress"><div class="project-progress-bar" style="width: 72%; background: var(--accent);"></div></div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between mb-2" style="display:flex; justify-content:space-between;">
+                                    <span>Minat Forward Contract (Kunci Harga Stabil)</span>
+                                    <strong>88%</strong>
+                                </div>
+                                <div class="project-progress"><div class="project-progress-bar" style="width: 88%; background: var(--secondary);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 3: MARKET SIZING (TAM SAM SOM) -->
+            <section id="marketSizing" class="market-section">
+                <div class="market-info-grid">
+                    <div class="section-header" style="text-align: left; margin-bottom: 1.5rem;">
+                        <span class="section-tag">Market Sizing</span>
+                        <h2 class="section-title">Ukuran Pasar (Semarang & Jateng)</h2>
+                        <p class="section-desc">Pendekatan Top-Down berdasarkan data BPS PDRB sub-sektor tanaman pangan dan hortikultura regional.</p>
+                    </div>
+                    
+                    <div class="market-card glass-panel">
+                        <div class="market-icon"><i class="fa-solid fa-earth-asia"></i></div>
+                        <div class="market-details">
+                            <h4>TAM (Total Addressable Market)</h4>
+                            <p>Seluruh PDRB sektor pertanian & kehutanan Provinsi Jawa Tengah</p>
+                            <div class="market-val">Rp165 Triliun / Tahun</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-card glass-panel">
+                        <div class="market-icon" style="color: var(--secondary);"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div class="market-details">
+                            <h4>SAM (Serviceable Available Market)</h4>
+                            <p>Nilai komoditas hortikultura di wilayah Kabupaten Semarang</p>
+                            <div class="market-val" style="color: var(--secondary);">Rp3.8 Triliun / Tahun</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-card glass-panel" style="border-color: var(--border-color-active);">
+                        <div class="market-icon"><i class="fa-solid fa-bullseye"></i></div>
+                        <div class="market-details">
+                            <h4>SOM (Serviceable Obtainable Market)</h4>
+                            <p>Target penetrasi 1.5% Gapoktan (Bandungan, Getasan, Sumowono) Tahun 1-2</p>
+                            <div class="market-val">Rp57 Miliar / Tahun</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="market-chart-container glass-panel">
+                    <h3 class="mb-4"><i class="fa-solid fa-chart-pie"></i> Visualisasi Kontribusi Pasar</h3>
+                    <div style="width: 100%; max-width: 380px; position: relative;">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOLUTIONS FRAMEWORK (HULU - TENGAH - HILIR) -->
+            <section id="solutionModel">
+                <div class="section-header">
+                    <span class="section-tag">Solusi JejakDaya</span>
+                    <h2 class="section-title">Alur Sistem Terintegrasi Closed-Loop</h2>
+                    <p class="section-desc">Bagaimana data dan aset mengalir dalam satu garis lurus untuk menghilangkan kerugian.</p>
+                </div>
+
+                <div class="business-grid">
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon"><i class="fa-solid fa-school"></i></div>
+                        <h3 class="biz-title">Fase 1: Hulu (Closed-Loop Modal)</h3>
+                        <p class="biz-desc">
+                            Petani dilatih melalui <strong>Smart Farming Academy</strong>. Peminatan proyek didanai investor, tetapi dana investor langsung diwujudkan dalam sarana produksi (pupuk, bibit unggul) secara non-tunai demi keamanan optimal.
+                        </p>
+                    </div>
+
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon" style="color: var(--secondary); border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1);"><i class="fa-solid fa-microphone-lines"></i></div>
+                        <h3 class="biz-title">Fase 2: Tengah (Operasional & Match)</h3>
+                        <p class="biz-desc">
+                            Operasional dilaporkan instan via <strong>AI Voice Assistant "Karsa"</strong>. Backend JejakDaya otomatis mencocokkan ramalan panen dengan Input Demand B2B untuk mengunci harga lewat <strong>Forward Contract</strong>.
+                        </p>
+                    </div>
+
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon"><i class="fa-solid fa-route"></i></div>
+                        <h3 class="biz-title">Fase 3: Hilir (3-Tier Logistics)</h3>
+                        <p class="biz-desc">
+                            Komoditas dibawa ke <strong>JejakDaya Hub</strong> untuk kurasi mutu. Kualitas Premium dikirim ke pabrik (Tier 1), Kualitas Medium ke Restoran (Tier 2), sisanya ke pasar lokal (Tier 3) demi tercapainya <strong>Zero Food Loss</strong>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPETITIVE MATRIX TABLE -->
+            <section id="competitors">
+                <div class="section-header">
+                    <span class="section-tag">Peta Kompetisi</span>
+                    <h2 class="section-title">Mengapa JejakDaya Lebih Unggul?</h2>
+                    <p class="section-desc">Perbandingan komparatif strategis hulu-ke-hilir JejakDaya dengan 3 tier perantara tradisional.</p>
+                </div>
+
+                <div class="matrix-container glass-panel">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>Dimensi Perbandingan</th>
+                                <th>Tier 1: Distributor Industri</th>
+                                <th>Tier 2: Tengkulak Lokal</th>
+                                <th>Tier 3: Pasar Induk</th>
+                                <th class="featured-col">JejakDaya (Solusi Kami)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fokus Penyerapan</strong></td>
+                                <td>Hanya Grade Premium A (strict)</td>
+                                <td>Harga pukul rata sangat rendah</td>
+                                <td>Fluktuatif menampung sisa stok</td>
+                                <td class="featured-col"><span class="badge-check"><i class="fa-solid fa-circle-check"></i> Automated 3-Tier Routing</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Akses Permodalan</strong></td>
+                                <td>Tidak menyediakan modal</td>
+                                <td>Modal menjerat dengan bunga tinggi</td>
+                                <td>Tidak menyediakan permodalan</td>
+                                <td class="featured-col"><span class="badge-check"><i class="fa-solid fa-circle-check"></i> Closed-Loop Crowdfund</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Penentuan Harga Jual</strong></td>
+                                <td>Sepihak & kontrak kaku</td>
+                                <td>Tebasan sepihak di ladang</td>
+                                <td>Sangat fluktuatif (harian)</td>
+                                <td class="featured-col"><span class="badge-check"><i class="fa-solid fa-circle-check"></i> Forward Contract Adil</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Penerapan Teknologi</strong></td>
+                                <td>ERP tertutup internal</td>
+                                <td>Manual (WhatsApp/Buku nota)</td>
+                                <td>Konvensional transaksi fisik</td>
+                                <td class="featured-col"><span class="badge-check"><i class="fa-solid fa-circle-check"></i> AI voice Karsa & Smart Match</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- BUSINESS MODEL CANVAS SUMS -->
+            <section id="businessModel">
+                <div class="section-header">
+                    <span class="section-tag">Model Bisnis & Monetisasi</span>
+                    <h2 class="section-title">Revenue Stream yang Berkelanjutan</h2>
+                    <p class="section-desc">Menjaga skalabilitas bisnis tanpa harus membakar uang secara sia-sia.</p>
+                </div>
+
+                <div class="business-grid">
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <h3 class="biz-title">Bagi Hasil Utama (5% Platform)</h3>
+                        <p class="biz-desc">Platform fee 5% dari total keuntungan bersih panen yang disalurkan. 60% dialokasikan ke petani dan 35% untuk investor pendana.</p>
+                    </div>
+                    
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon" style="color: var(--secondary); border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1);"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                        <h3 class="biz-title">Logistics Fulfillment Margin</h3>
+                        <p class="biz-desc">Margin rasional dari efisiensi pengiriman kargo kolektif (Full-Truck Load) dari JejakDaya Hub menuju gudang pembeli B2B.</p>
+                    </div>
+
+                    <div class="biz-card glass-panel">
+                        <div class="biz-icon"><i class="fa-solid fa-rectangle-ad"></i></div>
+                        <h3 class="biz-title">Sponsorship & Ad-Space</h3>
+                        <p class="biz-desc">Ruang promosi targeted di dalam Smart Farming Academy bagi produsen pupuk organik, traktor, atau produsen bibit unggul.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- VIEW 2: LIVE ROLE INTERACTIVE SIMULATOR -->
+        <main id="portalView" class="portal-view d-none">
+            
+            <!-- SIMULATOR SIDEBAR MENU -->
+            <aside class="portal-sidebar">
+                <div>
+                    <h4 class="sidebar-title">Simulator Alur Kerja</h4>
+                    <ul class="sidebar-menu">
+                        <li>
+                            <button id="side-user_biasa" class="sidebar-link active" onclick="selectRole('user_biasa')">
+                                <i class="fa-solid fa-graduation-cap"></i> 1. User Biasa (Academy)
+                            </button>
+                        </li>
+                        <li>
+                            <button id="side-petani" class="sidebar-link" onclick="selectRole('petani')">
+                                <i class="fa-solid fa-wheat-awn"></i> 2. Agri-Preneur (Petani)
+                            </button>
+                        </li>
+                        <li>
+                            <button id="side-investor" class="sidebar-link" onclick="selectRole('investor')">
+                                <i class="fa-solid fa-wallet"></i> 3. Investor Komunitas
+                            </button>
+                        </li>
+                        <li>
+                            <button id="side-b2b" class="sidebar-link" onclick="selectRole('b2b')">
+                                <i class="fa-solid fa-building-columns"></i> 4. Pembeli B2B (Enterprise)
+                            </button>
+                        </li>
+                        <li>
+                            <button id="side-driver" class="sidebar-link" onclick="selectRole('driver')">
+                                <i class="fa-solid fa-truck"></i> 5. Mitra Logistik (Driver)
+                            </button>
+                        </li>
+                        <li>
+                            <button id="side-admin" class="sidebar-link" onclick="selectRole('admin')">
+                                <i class="fa-solid fa-user-gear"></i> 6. Admin JejakDaya
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-user">
+                    <div class="user-avatar" id="simAvatar">UB</div>
+                    <div class="user-meta">
+                        <h5 id="simUserName">Budi Santoso</h5>
+                        <p id="simUserRole">User Biasa</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- SIMULATOR CORE CONTAINER -->
+            <section class="portal-content">
+                
+                <!-- SIMULATION GLOBAL ALERTS LEDGER -->
+                <div class="portal-header">
+                    <div class="portal-title-area">
+                        <h2 id="portalTitle">Smart Farming Academy</h2>
+                        <p id="portalDesc">Edukasi modern agroteknologi & standarisasi niaga.</p>
+                    </div>
+                    
+                    <div class="live-state-widget">
+                        <div class="live-pulse"></div>
+                        <span>Demo Simulator Terkoneksi</span>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 1: USER BIASA - SMART FARMING ACADEMY -->
+                <div id="panel-user_biasa" class="sim-panel">
+                    <div class="content-grid-2-1">
+                        <div class="main-card glass-panel">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-book-open"></i> Kurikulum Smart Farming</h3>
+                                <span class="badge badge-info">Level 1 - Pemula</span>
+                            </div>
+                            
+                            <div class="academy-timeline">
+                                <div class="academy-module completed">
+                                    <div class="module-number">1</div>
+                                    <div class="module-info">
+                                        <h4>Intro to Precision Smart Farming</h4>
+                                        <p>Belajar memanfaatkan IoT sensor untuk memantau kelembaban tanah dan pH lahan sayur dataran tinggi.</p>
+                                    </div>
+                                    <span class="module-badge badge-done"><i class="fa-solid fa-circle-check"></i> Lulus</span>
+                                </div>
+
+                                <div class="academy-module active">
+                                    <div class="module-number">2</div>
+                                    <div class="module-info">
+                                        <h4>Forward Contract & B2B Pricing</h4>
+                                        <p>Memahami mekanisme hedging harga dari fluktuasi pasar kota melalui kontrak masa tanam dengan B2B.</p>
+                                    </div>
+                                    <span class="module-badge badge-active">Sedang Dipelajari</span>
+                                </div>
+
+                                <div class="academy-module">
+                                    <div class="module-number">3</div>
+                                    <div class="module-info">
+                                        <h4>Post-Harvest Sorting & 3-Tier Logistics</h4>
+                                        <p>Menentukan standarisasi mutu cabai, tomat, kubis menjadi Grade A, B, C untuk nol sampah pangan (Zero Food Loss).</p>
+                                    </div>
+                                    <span class="module-badge badge-locked"><i class="fa-solid fa-lock"></i> Terkunci</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academy Side Widgets (Quiz & Certify) -->
+                        <div class="side-widgets">
+                            <div class="quiz-widget glass-panel">
+                                <h3 class="mb-4"><i class="fa-solid fa-lightbulb"></i> Evaluasi Modul 2</h3>
+                                <p class="quiz-question">Bagaimana Forward Contract di JejakDaya membantu petani menghindari permainan harga tengkulak?</p>
+                                
+                                <div class="quiz-options">
+                                    <div class="quiz-option" onclick="selectQuizOption(this, 1)">
+                                        <div class="quiz-dot"></div>
+                                        <span>Tengkulak meminjamkan uang dengan jaminan sawah</span>
+                                    </div>
+                                    <div class="quiz-option" onclick="selectQuizOption(this, 2)">
+                                        <div class="quiz-dot"></div>
+                                        <span>Harga komoditas disepakati dan dikunci di awal masa tanam oleh pabrik</span>
+                                    </div>
+                                    <div class="quiz-option" onclick="selectQuizOption(this, 3)">
+                                        <div class="quiz-dot"></div>
+                                        <span>Petani membawa sendiri hasil panennya ke pasar induk Johar</span>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" style="width: 100%;" onclick="submitAcademyQuiz()">
+                                    Kirim Jawaban <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+
+                            <!-- Certificate Card -->
+                            <div id="certCard" class="glass-panel text-center p-6 mt-4 d-none" style="padding: 1.5rem; text-align: center; border-color: var(--primary);">
+                                <h4 style="color: var(--primary);"><i class="fa-solid fa-certificate"></i> Kelulusan Akademi</h4>
+                                <p class="mt-2 text-muted" style="font-size: 0.8rem;">Selamat! Anda sekarang terverifikasi sebagai calon <strong>Agri-Preneur</strong>.</p>
+                                <button class="btn btn-secondary mt-4" style="width: 100%; font-size: 0.8rem;" onclick="upgradeToFarmer()">
+                                    Daftar Jadi Agri-Preneur <i class="fa-solid fa-circle-arrow-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 2: AGRI-PRENEUR (PETANI) PORTAL -->
+                <div id="panel-petani" class="sim-panel d-none">
+                    <!-- Dashboard Numbers -->
+                    <div class="dashboard-grid">
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Estimasi Nilai Panen</span>
+                                <i class="fa-solid fa-rupiah-sign"></i>
+                            </div>
+                            <div class="stat-widget-val" id="farmerHarvestVal">Rp0</div>
+                            <div class="stat-widget-change change-up"><i class="fa-solid fa-lock"></i> Kunci Harga Forward</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Status Lahan IoT</span>
+                                <i class="fa-solid fa-droplet"></i>
+                            </div>
+                            <div class="stat-widget-val">42%</div>
+                            <div class="stat-widget-change text-muted">Kelembaban Tanah (Aman)</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Bantuan Benih & Pupuk</span>
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                            <div class="stat-widget-val" id="farmerGoodsStatus">N/A</div>
+                            <div class="stat-widget-change text-muted" id="farmerGoodsDesc">Belum ada pendanaan aktif</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Saldo Kantong Tani</span>
+                                <i class="fa-solid fa-piggy-bank"></i>
+                            </div>
+                            <div class="stat-widget-val" id="farmerWallet">Rp0</div>
+                            <div class="stat-widget-change change-up" id="farmerWalletNote">Bagi hasil 60%</div>
+                        </div>
+                    </div>
+
+                    <div class="content-grid-2-1">
+                        <!-- Left Panel: Propose & Track -->
+                        <div class="main-card glass-panel">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-file-invoice"></i> Pengajuan Pendanaan Lahan Baru</h3>
+                            </div>
+                            
+                            <form id="projectForm" onsubmit="proposeProject(event)">
+                                <div class="form-group">
+                                    <label>Komoditas Rencana Tanam</label>
+                                    <select class="form-control select-control" id="formCrop">
+                                        <option value="Cabai Merah">Cabai Merah Keriting</option>
+                                        <option value="Kubis Hijau">Kubis Hijau Dataran Tinggi</option>
+                                        <option value="Tomat Beef">Tomat Beef Super</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Luas Lahan Tanam (Meter Persegi)</label>
+                                    <input type="number" class="form-control" id="formArea" placeholder="Contoh: 1000" required min="100">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Rencana Target Pendanaan (Pembelian Pupuk, Benih, Mulsa)</label>
+                                    <input type="number" class="form-control" id="formBudget" placeholder="Contoh: 8500000" required min="1000000">
+                                    <p class="text-muted mt-2" style="font-size: 0.75rem;"><i class="fa-solid fa-circle-info"></i> Seluruh pendanaan disalurkan dalam bentuk fisik perlengkapan tani secara closed-loop.</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    Kirim Pengajuan Cepat (AI Curation) <i class="fa-solid fa-microchip"></i>
+                                </button>
+                            </form>
+
+                            <div class="mt-6" id="farmerActiveProjectArea">
+                                <h4 class="mb-4"><i class="fa-solid fa-clock-rotate-left"></i> Status Proyek Terkini</h4>
+                                <div class="glass-card p-4" id="farmerActiveProjectCard" style="padding: 1.25rem;">
+                                    <div class="text-center text-muted">Belum ada proyek tanam aktif. Gunakan form di atas untuk mengajukan pendanaan.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: AI Voice assistant "Karsa" -->
+                        <div class="side-widgets">
+                            <div class="glass-panel p-6">
+                                <h3 class="mb-2"><i class="fa-solid fa-microphone-lines"></i> AI Karsa Voice</h3>
+                                <p class="text-muted mb-4" style="font-size: 0.8rem;">Petani tua cukup bicara untuk mengisi jurnal log harian lahan tanpa ngetik di ladang.</p>
+                                
+                                <div class="karsa-mic-container">
+                                    <button class="karsa-mic-btn" id="karsaBtn" onclick="simulateKarsaVoice()">
+                                        <i class="fa-solid fa-microphone"></i>
+                                    </button>
+                                    <div class="karsa-transcript" id="karsaText">Tekan tombol mikrofon untuk mensimulasikan ucapan suara petani di sawah...</div>
+                                </div>
+
+                                <h4 class="mb-2" style="font-size: 0.9rem;"><i class="fa-solid fa-list-check"></i> Jurnal Laporan Terkirim</h4>
+                                <div class="voice-logs-list" id="karsaLogs">
+                                    <div class="text-center text-muted" style="font-size: 0.8rem; padding: 1rem;">Belum ada log jurnal harian.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 3: INVESTOR KOMUNITAS PORTAL -->
+                <div id="panel-investor" class="sim-panel d-none">
+                    
+                    <!-- KYC / Wallet Setup Phase (Hidden if done) -->
+                    <div id="kycRequirementArea" class="glass-panel mb-6">
+                        <div class="kyc-verification-box">
+                            <div class="kyc-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <h3>Verifikasi Identitas (KYC DANA Premium Style)</h3>
+                            <p class="text-muted mt-2" style="max-width: 500px; margin: 0 auto;">Sebagai platform finansial aman berizin, Anda wajib menautkan kartu identitas sebelum mendanai ketahanan pangan lokal.</p>
+                            
+                            <div class="kyc-step-visual">
+                                <div class="kyc-dot-step active" id="kycStep1">1</div>
+                                <div class="kyc-dot-step" id="kycStep2">2</div>
+                                <div class="kyc-dot-step" id="kycStep3">3</div>
+                            </div>
+
+                            <button class="btn btn-secondary" onclick="simulateKYC()">
+                                Mulai Verifikasi KYC Instan <i class="fa-solid fa-fingerprint"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Investor Area (Unlocked after KYC) -->
+                    <div id="investorMainArea" class="d-none">
+                        <div class="dashboard-grid">
+                            <div class="glass-panel stat-widget">
+                                <div class="stat-widget-header">
+                                    <span>Dompet Dana Premium</span>
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                                <div class="stat-widget-val" id="investorWallet">Rp50.000.000</div>
+                                <div class="stat-widget-change change-up"><i class="fa-solid fa-circle-check"></i> KYC Terverifikasi</div>
+                            </div>
+                            <div class="glass-panel stat-widget">
+                                <div class="stat-widget-header">
+                                    <span>Total Investasi Aktif</span>
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <div class="stat-widget-val" id="investorActiveAmt">Rp0</div>
+                                <div class="stat-widget-change text-muted">Aset Terkelola Lahan</div>
+                            </div>
+                            <div class="glass-panel stat-widget">
+                                <div class="stat-widget-header">
+                                    <span>Estimasi Keuntungan Bersih</span>
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <div class="stat-widget-val" id="investorProfitVal">Rp0</div>
+                                <div class="stat-widget-change change-up">Bagi hasil 35%</div>
+                            </div>
+                            <div class="glass-panel stat-widget">
+                                <div class="stat-widget-header">
+                                    <span>Dampak ESG Sosial</span>
+                                    <i class="fa-solid fa-people-roof"></i>
+                                </div>
+                                <div class="stat-widget-val">9.8/10</div>
+                                <div class="stat-widget-change text-muted">Sertifikasi Hijau Jateng</div>
+                            </div>
+                        </div>
+
+                        <div class="content-grid-2-1">
+                            <!-- Left: Project Listings to Fund -->
+                            <div class="main-card glass-panel">
+                                <div class="card-title-bar">
+                                    <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Katalog Lahan Siap Didanai</h3>
+                                    <span class="badge badge-success">Kabupaten Semarang</span>
+                                </div>
+
+                                <div class="project-catalog" id="investorCatalog">
+                                    <!-- Dynamic Project Cards go here -->
+                                </div>
+                            </div>
+
+                            <!-- Right: Closed-Loop Physical Resource Tracker -->
+                            <div class="side-widgets">
+                                <div class="glass-panel p-6">
+                                    <h3 class="mb-2"><i class="fa-solid fa-circle-nodes"></i> Closed-Loop Asset Tracker</h3>
+                                    <p class="text-muted mb-4" style="font-size: 0.8rem;">Investasi Anda dikonversi langsung menjadi fisik benih/pupuk untuk menghindari penipuan tunai.</p>
+                                    
+                                    <div class="loop-visualizer">
+                                        <div class="loop-step" id="loop-step-1">
+                                            <div class="loop-step-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                                            <h4>Kas Dana</h4>
+                                            <p>Otorisasi Penuh</p>
+                                        </div>
+                                        <div class="loop-step" id="loop-step-2">
+                                            <div class="loop-step-icon"><i class="fa-solid fa-truck-moving"></i></div>
+                                            <h4>Fisik Input</h4>
+                                            <p>Dikirim ke Kebun</p>
+                                        </div>
+                                        <div class="loop-step" id="loop-step-3">
+                                            <div class="loop-step-icon"><i class="fa-solid fa-seedling"></i></div>
+                                            <h4>Tanaman</h4>
+                                            <p>Tumbuh Subur</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-6" id="investorGeoTagArea">
+                                        <h4 class="mb-2" style="font-size: 0.9rem;"><i class="fa-solid fa-location-crosshairs"></i> Geo-Tagging Status Progres</h4>
+                                        <div class="glass-card p-4" style="text-align: center; padding: 1rem;">
+                                            <div id="investorGeoStatus" class="text-muted" style="font-size: 0.8rem;">Mulai mendanai salah satu proyek untuk mengaktifkan real-time log.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 4: PEMBELI B2B (ENTERPRISE) PORTAL -->
+                <div id="panel-b2b" class="sim-panel d-none">
+                    <div class="content-grid-2-1">
+                        <div class="main-card glass-panel">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-file-contract"></i> Portal Permintaan Komoditas B2B</h3>
+                                <span class="badge badge-info">Pra-Kontrak & Agregasi</span>
+                            </div>
+
+                            <form id="b2bDemandForm" onsubmit="createB2BDemand(event)">
+                                <div class="form-group">
+                                    <label>Komoditas yang Dibutuhkan</label>
+                                    <select class="form-control select-control" id="b2bCrop">
+                                        <option value="Cabai Merah">Cabai Merah Keriting (Premium)</option>
+                                        <option value="Kubis Hijau">Kubis Hijau Dataran Tinggi (Grade A)</option>
+                                        <option value="Tomat Beef">Tomat Beef Super (Premium)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Volume Pasokan Rutin (Ton)</label>
+                                    <input type="number" step="0.1" class="form-control" id="b2bVolume" placeholder="Contoh: 5.0" required min="0.5">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Penguncian Anggaran / Forward Price (per Kg)</label>
+                                    <input type="number" class="form-control" id="b2bPrice" placeholder="Contoh: 22000" required min="5000">
+                                    <p class="text-muted mt-2" style="font-size: 0.75rem;"><i class="fa-solid fa-circle-info"></i> Forward price mengunci anggaran pabrik dari lonjakan musiman, menjamin margin stabil.</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    Kirim Permintaan Pasokan B2B <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </form>
+
+                            <div class="mt-6">
+                                <h4 class="mb-2"><i class="fa-solid fa-clock-rotate-left"></i> Rekam Kontrak Kunci (Forward Contract)</h4>
+                                <div class="glass-card" style="overflow: hidden;">
+                                    <table class="demand-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Komoditas</th>
+                                                <th>Volume</th>
+                                                <th>Harga Kunci</th>
+                                                <th>Nilai Kontrak</th>
+                                                <th>Status Pasokan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="b2bContractsTable">
+                                            <tr>
+                                                <td colspan="5" class="text-center text-muted" style="padding: 1.5rem;">Belum ada kontrak pengadaan aktif. Gunakan form di atas.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Forecasting & Yield Matching -->
+                        <div class="side-widgets">
+                            <div class="glass-panel p-6">
+                                <h3 class="mb-2"><i class="fa-solid fa-brain"></i> Smart Demand Matching</h3>
+                                <p class="text-muted mb-4" style="font-size: 0.8rem;">Algoritma backend menyatukan rekaan panen kolektif tani lokal Semarang untuk mencukupi tonase kuota Anda.</p>
+                                
+                                <div id="b2bMatchWidget">
+                                    <div class="text-center text-muted" style="padding: 2rem;">Masukan permintaan pasokan di sebelah kiri untuk menganalisis ketersediaan panen.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 5: MITRA LOGISTIK (DRIVER) PORTAL -->
+                <div id="panel-driver" class="sim-panel d-none">
+                    <div class="dashboard-grid">
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Status Kendaraan</span>
+                                <i class="fa-solid fa-truck-flatbed"></i>
+                            </div>
+                            <div class="stat-widget-val">PICKUP L300</div>
+                            <div class="stat-widget-change change-up"><i class="fa-solid fa-circle-check"></i> Siap Narik</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Dompet Driver</span>
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div class="stat-widget-val" id="driverWallet">Rp0</div>
+                            <div class="stat-widget-change text-muted">JejakDaya logistics payment</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Rating Layanan</span>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="stat-widget-val">4.92 / 5</div>
+                            <div class="stat-widget-change change-up"><i class="fa-solid fa-check"></i> Top Driver Semarang</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Total Trip Bulanan</span>
+                                <i class="fa-solid fa-road"></i>
+                            </div>
+                            <div class="stat-widget-val">18 Trip</div>
+                            <div class="stat-widget-change text-muted">2,480 Km Terkover</div>
+                        </div>
+                    </div>
+
+                    <div class="content-grid-2-1">
+                        <div class="main-card glass-panel">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-bell"></i> Order Logistik Masuk (Hub Pick-Up)</h3>
+                                <span class="badge badge-warning" id="driverQueueBadge">0 Orderan</span>
+                            </div>
+
+                            <div id="driverQueueArea">
+                                <div class="text-center text-muted" style="padding: 3rem 1rem;">
+                                    <i class="fa-solid fa-map-location-dot" style="font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+                                    Menunggu proses grading panen dan otorisasi armada logistik oleh Admin.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Routing Map Simulator -->
+                        <div class="side-widgets">
+                            <div class="glass-panel p-6">
+                                <h3 class="mb-4"><i class="fa-solid fa-compass"></i> Rute Pengiriman Logistik</h3>
+                                <div id="driverMapVisual" class="glass-card" style="height: 250px; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 1.5rem; position: relative;">
+                                    <i class="fa-solid fa-map-location" style="font-size: 3rem; color: var(--text-dark); margin-bottom: 1rem;"></i>
+                                    <div class="text-center text-muted" style="font-size: 0.8rem;">Gps logistik offline. Ambil order pengiriman untuk memetakan rute optimal (Getasan Hub - Pabrik).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW 6: ADMIN JEJAKDAYA PORTAL -->
+                <div id="panel-admin" class="sim-panel d-none">
+                    <div class="dashboard-grid">
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Kas Platform (5% Fee)</span>
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                            <div class="stat-widget-val" id="adminPlatformFee">Rp0</div>
+                            <div class="stat-widget-change change-up">Operasional Kas</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Proyek Kurasi AI</span>
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <div class="stat-widget-val" id="adminPendingProjects">0 Proyek</div>
+                            <div class="stat-widget-change text-muted">Perlu Tinjauan Mutu</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Volume Hub Kolektif</span>
+                                <i class="fa-solid fa-boxes-packing"></i>
+                            </div>
+                            <div class="stat-widget-val" id="adminHubVolume">0 Ton</div>
+                            <div class="stat-widget-change text-muted">Kab. Semarang Sentral</div>
+                        </div>
+                        <div class="glass-panel stat-widget">
+                            <div class="stat-widget-header">
+                                <span>Kontrak Terkunci</span>
+                                <i class="fa-solid fa-file-shield"></i>
+                            </div>
+                            <div class="stat-widget-val" id="adminContractCount">0 Unit</div>
+                            <div class="stat-widget-change change-up">Forward Match Lock</div>
+                        </div>
+                    </div>
+
+                    <div class="content-grid-2-1">
+                        <div class="main-card glass-panel">
+                            <!-- Section A: Project Curation -->
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-magnifying-glass-chart"></i> AI Curation & Persetujuan Proyek</h3>
+                            </div>
+                            
+                            <div id="adminProjectQueue" class="mb-6">
+                                <div class="text-center text-muted" style="padding: 1.5rem;">Tidak ada proyek tani baru yang menunggu persetujuan.</div>
+                            </div>
+
+                            <!-- Section B: Post-Harvest Quality Grading -->
+                            <div class="card-title-bar mt-6">
+                                <h3><i class="fa-solid fa-scale-balanced"></i> JejakDaya Hub Gatekeeping: QC & Timbangan</h3>
+                            </div>
+
+                            <div id="adminHubQCQueue">
+                                <div class="text-center text-muted" style="padding: 1.5rem;">Tidak ada komoditas panen di stasiun Hub yang mengantri Quality Control.</div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Sales Routing & Payouts -->
+                        <div class="side-widgets">
+                            <!-- 3-Tier Sales Routing Visualizer -->
+                            <div class="glass-panel p-6 mb-4">
+                                <h3 class="mb-2"><i class="fa-solid fa-route"></i> 3-Tier Sales Routing</h3>
+                                <p class="text-muted mb-4" style="font-size: 0.8rem;">Pembagian cerdas komoditas hasil panen demi Zero Food Loss.</p>
+                                
+                                <div class="tier-routing-map" id="adminTierRoutingWidget">
+                                    <div class="tier-item" id="tier-1-route">
+                                        <div class="tier-number-badge">1</div>
+                                        <div class="tier-info">
+                                            <h4>Premium (Grade A)</h4>
+                                            <p>Mengisi Forward Contract Pabrik / Horeka B2B</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tier-item" id="tier-2-route">
+                                        <div class="tier-number-badge">2</div>
+                                        <div class="tier-info">
+                                            <h4>Standard (Grade B)</h4>
+                                            <p>Kebutuhan Katering & Restoran Non-Pabrik</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="tier-item" id="tier-3-route">
+                                        <div class="tier-number-badge">3</div>
+                                        <div class="tier-info">
+                                            <h4>Surplus (Grade C)</h4>
+                                            <p>Pasar Induk Tradisional Lokal Semarang</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Split Payout Gateway Details -->
+                            <div class="glass-panel p-6">
+                                <h3 class="mb-2"><i class="fa-solid fa-arrows-split-up-and-left"></i> Split Payout Gateway</h3>
+                                <p class="text-muted mb-4" style="font-size: 0.8rem;">Pembayaran otomatis (split-bill) terintegrasi sistem bank aman.</p>
+                                
+                                <div class="glass-card p-4" style="padding: 1rem;">
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;" class="mb-2">
+                                        <span>Porsi Agri-Preneur:</span>
+                                        <strong style="color:var(--primary)">60%</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;" class="mb-2">
+                                        <span>Porsi Investor:</span>
+                                        <strong style="color:var(--secondary)">35%</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; font-size:0.85rem;" class="mb-2">
+                                        <span>Platform Fee JejakDaya:</span>
+                                        <strong>5%</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- GLOBAL SIMULATION LOG ALERTS -->
+        <div class="simulation-notifier" id="globalNotifier"></div>
+
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script src="app.js"></script>
+</body>
+</html>
